@@ -11,7 +11,7 @@ import asyncio
 
 currency = libcurrency.Token()
 
-await currency() # Needs to be ran once at the start of the bot. This is the function that gives currency over time.
+await currency.start() # Needs to be ran once at the start of the bot. This is the function that gives currency over time.
 currency.check_balance(user) # Returns the amount of codetokens belonging to a user.
 try:        
     currency.remove_tokens(user, amount) # Removes codetokens from a user
