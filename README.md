@@ -14,7 +14,7 @@ currency = libcurrency.Token()
 await currency.start() # Needs to be ran once at the start of the bot. This is the function that gives currency over time.
 currency.check_balance(user) # Returns the amount of codetokens belonging to a user.
 try:        
-    currency.remove_tokens(user, amount) # Removes codetokens from a user
+    currency.remove_balance(user, amount) # Removes codetokens from a user
 except Exception as e:
     print(e)
 currency.set_balance(user, amount) # Set codetoken balance to a specific value for a user

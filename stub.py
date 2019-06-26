@@ -18,7 +18,7 @@ class Token:
         else:
             raise Exception("Balance cannot be less than 0") 
     
-    def remove_tokens(self, usr, c):
+    def remove_balance(self, usr, c):
         if (self.balance - c) >= 0:
             self.balance = self.balance - c
             return

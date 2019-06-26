@@ -27,7 +27,7 @@ class Token:
         if b >= 0:
             id = usr.id
             user = self.table.find_one(user=id)
-            self.table.update(dict(user=id, coins=b), ['user'])
+            self.table.update(dict(user=id, coins=b), [user])
             return
         else:
             raise Exception("Balance cannot be less than 0") 
