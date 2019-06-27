@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import sys
 import traceback
-import stub as libcurrency
+import libcurrency
 
 def get_prefix(bot, message):
     prefixes = ['$']
@@ -26,9 +26,14 @@ if __name__ == '__main__':
 @bot.event
 async def on_ready():
     print(f'\n\nLogged in\n{bot.user.name} - {bot.user.id}\nDiscord version: {discord.__version__}\n')
-    await currency.start()
+    await currency.start(bot)
 
     await bot.change_presence(activity=discord.Streaming(name='Testing', url='no u'))
     print(f'Launch complete.')
+
+@bot.listen()
+async def on_member_join(member):
+    currency.join(member)
+
 
 bot.run('token', bot=True, reconnect=True)
