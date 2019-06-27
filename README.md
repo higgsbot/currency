@@ -12,9 +12,6 @@ import discord
 
 currency = libcurrency.Token()
 
-<<<<<<< Updated upstream
-await currency.start() # Needs to be ran once at the start of the bot. This is the function that gives currency over time.
-=======
 @bot.event
 async def on_ready():
     await currency.start() # Needs to be ran once at the start of the bot. This is the function that gives currency over time.
@@ -24,7 +21,6 @@ async def on_ready():
 async def on_member_join(member):
     currency.join(member)
 
->>>>>>> Stashed changes
 currency.check_balance(user) # Returns the amount of codetokens belonging to a user.
 
 try:        
@@ -33,17 +29,9 @@ except Exception as e:
     print(e)
 
 currency.set_balance(user, amount) # Set codetoken balance to a specific value for a user
-
-@bot.listen()
-async def on_member_join(member):
-    currency.join(member)
 ```
 
-<<<<<<< Updated upstream
-See test.py for small usage example.
-=======
 See test.py for further usage example. \
->>>>>>> Stashed changes
 See the [Testing branch](https://github.com/higgsbot/libcurrency/tree/testing) for an implementation example.
 
 ## Requirements

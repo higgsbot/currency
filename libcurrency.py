@@ -12,22 +12,11 @@ class Token:
         for member in bot.get_all_members():
             id = member.id
             if self.table.find_one(user=id) is None:
-<<<<<<< Updated upstream
-                print("inserting {}".format(id))
-                self.table.insert(dict(user=id, coins=3))    
-            else:
-                print("{} already inserted".format(id)) 
-
-    def check_balance(self, usr):
-        id = usr.id
-        if self.table.find_one(user=id) is None:
-=======
                 self.table.insert(dict(user=id, coins=3))    
 
     def check_balance(self, usr):
         id = usr.id
         if self.table.find_one(user=id) is not None:
->>>>>>> Stashed changes
             user = self.table.find_one(user=id)
             return user['coins']
         else:
@@ -37,11 +26,7 @@ class Token:
     def set_balance(self, usr, b):
         if b >= 0:
             id = usr.id
-<<<<<<< Updated upstream
-            if self.table.find_one(user=id) is None:
-=======
             if self.table.find_one(user=id) is not None:
->>>>>>> Stashed changes
                 self.table.update(dict(user=id, coins=b), ['user'])
                 return
             else:
@@ -51,34 +36,6 @@ class Token:
             raise Exception("Balance cannot be less than 0") 
     
     def remove_balance(self, usr, c):
-<<<<<<< Updated upstream
-        id = usr.id
-        if self.table.find_one(user=id) is None:
-            user = self.table.find_one(user=id)
-            if (user['coins'] - c) >= 0:
-                new_coins = user['coins'] - c
-                self.table.update(dict(user=id, coins=new_coins), ['user'])
-                return
-            else:
-                raise Exception("Balance insufficient") 
-        else:
-            self.table.insert(dict(user=id, coins=b))
-            user = self.table.find_one(user=id)
-            if (user['coins'] - c) >= 0:
-                new_coins = user['coins'] - c
-                self.table.update(dict(user=id, coins=new_coins), ['user'])
-                return
-            else:
-                raise Exception("Balance insufficient")
-
-    def join(self, usr):
-        id = usr.id
-        if self.table.find_one(user=id) is None:
-                print("inserting {}".format(id))
-                self.table.insert(dict(user=id, coins=3))    
-        else:
-            print("{} already inserted".format(id))
-=======
         id = usr.id
         if self.table.find_one(user=id) is not None:
             user = self.table.find_one(user=id)
@@ -110,4 +67,3 @@ class Token:
                 if user['coins'] < 10:
                     user['coins'] = user['coins'] + 1
                     self.table.update(dict(user=user['user'], coins=user['coins']), ['user'])
->>>>>>> Stashed changes
