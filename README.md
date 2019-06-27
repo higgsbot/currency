@@ -8,19 +8,25 @@ Designed for HiggsBot.
 ```python
 import libcurrency
 import asyncio
+import discord
 
 currency = libcurrency.Token()
 
-await currency() # Needs to be ran once at the start of the bot. This is the function that gives currency over time.
+await currency.start() # Needs to be ran once at the start of the bot. This is the function that gives currency over time.
 currency.check_balance(user) # Returns the amount of codetokens belonging to a user.
 try:        
     currency.remove_tokens(user, amount) # Removes codetokens from a user
 except Exception as e:
     print(e)
 currency.set_balance(user, amount) # Set codetoken balance to a specific value for a user
+
+@bot.listen()
+async def on_member_join(member):
+    currency.join(member)
 ```
 
-See test.py for further usage example.
+See test.py for small usage example.
+See the [Testing branch](https://github.com/higgsbot/libcurrency/tree/testing) for an implementation example.
 
 ## Requirements
 
