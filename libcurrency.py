@@ -2,7 +2,7 @@ import asyncio
 import dataset
 import discord
 
-DATABASE = dataset.connect('sqlite:///test.db')
+DATABASE = dataset.connect('sqlite:///higgsbot.db')
 
 class Token:
     def __init__(self):
@@ -12,14 +12,11 @@ class Token:
         for member in bot.get_all_members():
             id = member.id
             if self.table.find_one(user=id) is None:
-                print("inserting {}".format(id))
                 self.table.insert(dict(user=id, coins=3))    
-            else:
-                print("{} already inserted".format(id)) 
 
     def check_balance(self, usr):
         id = usr.id
-        if self.table.find_one(user=id) is None:
+        if self.table.find_one(user=id) is not None:
             user = self.table.find_one(user=id)
             return user['coins']
         else:
@@ -29,7 +26,7 @@ class Token:
     def set_balance(self, usr, b):
         if b >= 0:
             id = usr.id
-            if self.table.find_one(user=id) is None:
+            if self.table.find_one(user=id) is not None:
                 self.table.update(dict(user=id, coins=b), ['user'])
                 return
             else:
@@ -40,7 +37,7 @@ class Token:
     
     def remove_balance(self, usr, c):
         id = usr.id
-        if self.table.find_one(user=id) is None:
+        if self.table.find_one(user=id) is not None:
             user = self.table.find_one(user=id)
             if (user['coins'] - c) >= 0:
                 new_coins = user['coins'] - c
@@ -49,7 +46,7 @@ class Token:
             else:
                 raise Exception("Balance insufficient") 
         else:
-            self.table.insert(dict(user=id, coins=b))
+            self.table.insert(dict(user=id, coins=c))
             user = self.table.find_one(user=id)
             if (user['coins'] - c) >= 0:
                 new_coins = user['coins'] - c
@@ -58,10 +55,15 @@ class Token:
             else:
                 raise Exception("Balance insufficient")
 
-    def join(self, usr):
+    def join(self, usr): # On joining of user add him to the table if he's not already there.
         id = usr.id
         if self.table.find_one(user=id) is None:
-                print("inserting {}".format(id))
                 self.table.insert(dict(user=id, coins=3))    
-        else:
-            print("{} already inserted".format(id))
+
+    async def payment(self):
+        while True: # 10 minute loop to add CodeTokens.
+            await asyncio.sleep(600)
+            for user in self.table:
+                if user['coins'] < 10:
+                    user['coins'] = user['coins'] + 1
+                    self.table.update(dict(user=user['user'], coins=user['coins']), ['user'])
