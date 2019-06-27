@@ -1,5 +1,7 @@
 import asyncio
 
+# STUB to use when database is unavailable (should never happen)
+
 class Token:
     def __init__(self):
         self.balance = 5

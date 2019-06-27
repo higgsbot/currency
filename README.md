@@ -12,12 +12,26 @@ import discord
 
 currency = libcurrency.Token()
 
+<<<<<<< Updated upstream
 await currency.start() # Needs to be ran once at the start of the bot. This is the function that gives currency over time.
+=======
+@bot.event
+async def on_ready():
+    await currency.start() # Needs to be ran once at the start of the bot. This is the function that gives currency over time.
+    bot.loop.create_task(currency.payment()) # Starts the loop that awards users CodeTokens.
+
+@bot.listen()
+async def on_member_join(member):
+    currency.join(member)
+
+>>>>>>> Stashed changes
 currency.check_balance(user) # Returns the amount of codetokens belonging to a user.
+
 try:        
     currency.remove_tokens(user, amount) # Removes codetokens from a user
 except Exception as e:
     print(e)
+
 currency.set_balance(user, amount) # Set codetoken balance to a specific value for a user
 
 @bot.listen()
@@ -25,15 +39,22 @@ async def on_member_join(member):
     currency.join(member)
 ```
 
+<<<<<<< Updated upstream
 See test.py for small usage example.
+=======
+See test.py for further usage example. \
+>>>>>>> Stashed changes
 See the [Testing branch](https://github.com/higgsbot/libcurrency/tree/testing) for an implementation example.
 
 ## Requirements
 
 - [Dataset](https://dataset.readthedocs.io/en/latest/)
 - [AsyncIO](https://docs.python.org/3/library/asyncio.html)
+- [Discord.py](https://github.com/Rapptz/discord.py/)
 
-The library relies on Async IO to be able to run the codetoken awarding function in the background. Since Discord.py requires this as well, it doesn't add unnecessary bulk to the code. Dataset is used to store user data.
+The library relies on Async IO to be able to run the codetoken awarding function in the background. \
+Since Discord.py requires this as well, it doesn't add unnecessary bulk to the code. \
+Dataset is used to store user data.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
