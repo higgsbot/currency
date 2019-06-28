@@ -64,6 +64,6 @@ class Token:
         while True: # 10 minute loop to add CodeTokens.
             await asyncio.sleep(600)
             for user in self.table:
-                if user['coins'] < 10:
+                if user['coins'] < 12:
                     user['coins'] = user['coins'] + 1
                     self.table.update(dict(user=user['user'], coins=user['coins']), ['user'])
