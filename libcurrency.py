@@ -2,7 +2,7 @@ import asyncio
 import dataset
 import discord
 
-DATABASE = dataset.connect('sqlite:///higgsbot.db')
+DATABASE = dataset.connect('sqlite:///data/bot/higgsbot.db')
 
 class Token:
     def __init__(self):
